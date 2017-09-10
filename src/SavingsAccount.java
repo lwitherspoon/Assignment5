@@ -9,8 +9,6 @@ import java.util.Scanner;
 
 public class SavingsAccount {
 
-    private static float annualInterestRate;
-
     /**
      * Compounds value in account based on starting dollar amount, number of months, and monthly addition of $100
      * @param months number of months to forecast out
@@ -20,7 +18,7 @@ public class SavingsAccount {
      * @return total amount with compounded interest in account after specified number of months
      */
     static double compoundValue(int months, String initialAmount, double monthlyDeposit, float annualInterestRate) {
-        double newAmount = Double.parseDouble(initialAmount);
+        double newAmount = Double.parseDouble(initialAmount.replaceAll(",", ""));
         float monthlyRate = (annualInterestRate / 100) / 12;
 
         for (int i = 0; i < months; i++) {
@@ -62,12 +60,13 @@ public class SavingsAccount {
             rateInput = keyboard.next();
         }
 
-        annualInterestRate = parseInput(rateInput);
+        // Parse rate input by user and save to local variable
+        float annualInterestRate = parseInput(rateInput);
 
         System.out.println("How many months in the future should I project?");
         int months = keyboard.nextInt();
 
-        // If months is negative, prompt user for number of months again
+        // If months is negative, prompt user again for number of months
         while (months < 0) {
             System.out.println("You can't have negative months. ");
             System.out.println("Please enter the number of months in the future to project.");
